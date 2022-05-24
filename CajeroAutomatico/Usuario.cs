@@ -10,7 +10,7 @@ namespace CajeroAutomatico
     {
 
         //En archivo de texto la salida debe ser la impresión del recibo de las operaciones que haga.
-        List<Usuario> ListaUsuarios;
+        public List<Usuario> ListaUsuarios;
 
         public Usuario() {
             ListaUsuarios = new List<Usuario>();
