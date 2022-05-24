@@ -17,7 +17,7 @@ namespace CajeroAutomatico
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FPrincipal());
+            Application.Run(new FIniciarSesion());
         }
     }
 }

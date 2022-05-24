@@ -25,9 +25,10 @@ namespace CajeroAutomatico
             this.Contrasenia = Contrasenia;
 
             ListaUsuarios = new List<Usuario>();
+            
 
         }
-
+        
         
 
         public override void RegistrarPersona(Usuario usuario)

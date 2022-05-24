@@ -17,6 +17,7 @@ namespace CajeroAutomatico
                 if(item.User == user && item.Contrasenia == pass)
                 {
                     return true;
+                    break;
                 }
             }
             return false;
