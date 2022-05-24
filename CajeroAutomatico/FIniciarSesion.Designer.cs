@@ -1,6 +1,6 @@
 ﻿namespace CajeroAutomatico
 {
-    partial class IniciarSesion
+    partial class FIniciarSesion
     {
         /// <summary>
         /// Required designer variable.

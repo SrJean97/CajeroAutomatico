@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CajeroAutomatico
 {
-    public partial class IniciarSesion : Form
+    public partial class FIniciarSesion : Form
     {
-        public IniciarSesion()
+        public FIniciarSesion()
         {
             InitializeComponent();
         }
