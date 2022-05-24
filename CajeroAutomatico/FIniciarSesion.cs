@@ -12,14 +12,12 @@ namespace CajeroAutomatico
 {
     public partial class FIniciarSesion : Form
     {
-        Usuario usuario;
-        Sesion sesion;
+        
+        Sesion sesion = new Sesion();
 
         public FIniciarSesion()
         {
             InitializeComponent();
-            usuario = new Usuario();
-            sesion = new Sesion();
         }
 
         private void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -35,17 +33,18 @@ namespace CajeroAutomatico
                 {
                     string user = txtUsuario.Text;
                     string pass = txtContrasenia.Text;
-                    bool ValidarSesion = sesion.IniciarSesion(user, pass);
-                    if(ValidarSesion)
+
+                    bool se = sesion.IniciarSesion(user, pass);
+
+                    if (se == true)
                     {
-                        MessageBox.Show("Existiomos wey");
+                        MessageBox.Show("Entramos");
                     }
                     else
                     {
-                        MessageBox.Show("El usuario no existe, intente de nuevo o registrese");
+                        MessageBox.Show("No entramos");
                     }
                 }
-                LimpiarCampos();
             }
             catch (Exception ex)
             {
@@ -53,10 +52,18 @@ namespace CajeroAutomatico
             }
         }
 
+        private void btnRegistrar_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FRegistrarUsuario fRegistrarUsuario = new FRegistrarUsuario();
+            fRegistrarUsuario.Show();
+        }
+
         private void LimpiarCampos()
         {
             txtUsuario.Clear();
             txtContrasenia.Clear();
         }
+
     }
 }

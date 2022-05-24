@@ -74,7 +74,7 @@ namespace CajeroAutomatico
                     {
                         Console.WriteLine("El numero de cuenta ya se encuentra registrado");
                     }
-                    else if (cuenta.usuario.Cedula == null)
+                    else if (cuenta.usuario.cedula == null)
                     {
                         Console.WriteLine("No existe un usuario asociado a la cuenta");
                     }

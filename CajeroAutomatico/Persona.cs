@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace CajeroAutomatico
 {
-    internal abstract class Persona
+    public abstract class Persona
     {
-        public string Cedula { get; set; }
-        public string Nombre { get; set; }
-        public string User { get; set; }
-        public string Contrasenia { get; set; }
+        public string cedula { get; set; }
+        public string nombre { get; set; }
+        public string user { get; set; }
+        public string contrasenia { get; set; }
 
-        public abstract void RegistrarPersona(Usuario usuario);
+        public abstract void RegistrarUsuario(Usuario usuario);
     }
 }

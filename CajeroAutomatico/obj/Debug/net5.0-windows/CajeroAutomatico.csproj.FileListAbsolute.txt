@@ -17,3 +17,4 @@ D:\Documentos\2022\Documentos\Franklin\CajeroAutomatico\CajeroAutomatico\obj\Deb
 D:\Documentos\2022\Documentos\Franklin\CajeroAutomatico\CajeroAutomatico\obj\Debug\net5.0-windows\CajeroAutomatico.pdb
 D:\Documentos\2022\Documentos\Franklin\CajeroAutomatico\CajeroAutomatico\obj\Debug\net5.0-windows\CajeroAutomatico.genruntimeconfig.cache
 D:\Documentos\2022\Documentos\Franklin\CajeroAutomatico\CajeroAutomatico\obj\Debug\net5.0-windows\ref\CajeroAutomatico.dll
+D:\Documentos\2022\Documentos\Franklin\CajeroAutomatico\CajeroAutomatico\obj\Debug\net5.0-windows\CajeroAutomatico.FRegistrarUsuario.resources

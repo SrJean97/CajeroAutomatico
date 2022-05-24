@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CajeroAutomatico
 {
-    internal class Usuario : Persona
+    public class Usuario : Persona
     {
 
         //En archivo de texto la salida debe ser la impresión del recibo de las operaciones que haga.
@@ -16,57 +17,78 @@ namespace CajeroAutomatico
             ListaUsuarios = new List<Usuario>();
         }
 
-        public Usuario(string Cedula, string Nombre, string User, string Contrasenia)
+        public Usuario(string cedula, string nombre, string user, string contrasenia)
         {
 
-            this.Cedula = Cedula;
-            this.Nombre = Nombre;
-            this.User = User;
-            this.Contrasenia = Contrasenia;
-
+            this.cedula = cedula;
+            this.nombre = nombre;
+            this.user = user;
+            this.contrasenia = contrasenia;
             ListaUsuarios = new List<Usuario>();
-            
-
         }
         
-        
 
-        public override void RegistrarPersona(Usuario usuario)
+        public override void RegistrarUsuario(Usuario usuario)
         {
             
             if(ListaUsuarios.Count == 0)
             {
                 ListaUsuarios.Add(usuario);
-                Console.WriteLine("Usuario creado correctamente");
+                MessageBox.Show("Usuario creado correctamente");
             }
             else
             {
                 foreach(var item in ListaUsuarios)
                 {
-                    if (item.Cedula.Equals(usuario.Cedula))
+                    if (item.cedula.Equals(usuario.cedula))
                     {
-                        Console.WriteLine("El usuario ya se encuentra registrado");
+                        MessageBox.Show("El usuario ya se encuentra registrado");
                         break;
                     }
                     else
                     {
-                        ListaUsuarios.Add(usuario);
-                        Console.WriteLine("Usuario creado correctamente");
+                        this.ListaUsuarios.Add(usuario);
+                        MessageBox.Show("Usuario creado correctamente");
                     }
                 }
             }
         }
 
-        public Usuario ConsultarUsuario(string cedula)
+        public Usuario ConsultarUsuario(string id)
         {
 
+            Usuario uNuevo = new Usuario();
+
+            foreach(Usuario u in ListaUsuarios)
+            {
+                if (u.cedula.Equals(id))
+                {
+                    uNuevo = u;
+                }
+                else
+                {
+                    MessageBox.Show("Usuario no se encuentra registrado");
+                    break;
+                }
+            }
+            return uNuevo;
+        }
+
+        public List<Usuario> ConsultarTodos()
+        {
+            List<Usuario> ul = new List<Usuario>();
             Usuario u = new Usuario();
 
             foreach(var item in ListaUsuarios)
             {
-                if (item.Cedula.Equals(cedula)) u = item;                
+                u.cedula = item.cedula;
+                u.nombre = item.nombre;
+                u.user = item.user;
+                u.contrasenia = item.contrasenia;
+                ul.Add(u);
             }
-            return u;
+
+            return ul;
         }
     }
 }

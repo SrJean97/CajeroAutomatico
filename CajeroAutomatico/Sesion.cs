@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CajeroAutomatico
 {
     internal class Sesion
     {
+        
 
-        Usuario usuario = new Usuario();
         public bool IniciarSesion(string user, string pass)
         {
-            foreach(var item in usuario.ListaUsuarios)
+            Usuario usuario = new Usuario();
+
+            foreach (Usuario u in usuario.ListaUsuarios) 
             {
-                if(item.User == user && item.Contrasenia == pass)
+                if(u.user == user && u.contrasenia == pass)
                 {
                     return true;
                     break;
