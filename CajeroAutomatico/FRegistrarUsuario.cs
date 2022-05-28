@@ -22,7 +22,7 @@ namespace CajeroAutomatico
 
         private void btnCancelarRegistro_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
             FIniciarSesion fis = new FIniciarSesion();
             fis.Show();
         }
@@ -30,29 +30,20 @@ namespace CajeroAutomatico
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             
-            try
+            if (txtCedula.Text == "" || txtNombre.Text == "" || txtUsuario.Text == "" || txtContrasenia.Text == "")
             {
-                if (txtCedula.Text == "" || txtNombre.Text == "" || txtUsuario.Text == "" || txtContrasenia.Text == "")
-                {
-                    MessageBox.Show("Debe llenar todos los campos");
-                }
-                else
-                {
-                    
-                    string cedula = txtCedula.Text;
-                    string nombre = txtNombre.Text;
-                    string user = txtUsuario.Text;
-                    string contrasenia = txtContrasenia.Text;
-
-                    Usuario uNuevo = new Usuario(cedula,nombre,user,contrasenia);
-                    
-                    usuario.RegistrarUsuario(uNuevo);
-
-                }
+                MessageBox.Show("Debe llenar todos los campos");
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Error de aplicación " + ex);
+                
+                string cedula = txtCedula.Text;
+                string nombre = txtNombre.Text;
+                string user = txtUsuario.Text;
+                string contrasenia = txtContrasenia.Text;
+
+                usuario.RegistrarUsuario(new Usuario(cedula,nombre,user,contrasenia));
+                LimpiarCampos();
             }
             
         }
@@ -65,5 +56,11 @@ namespace CajeroAutomatico
             txtContrasenia.Clear();
         }
 
+        private void btnRegistrarCuenta_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            FRegistrarCuenta frc = new FRegistrarCuenta();
+            frc.Show();
+        }
     }
 }

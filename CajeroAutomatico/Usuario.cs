@@ -11,11 +11,12 @@ namespace CajeroAutomatico
     {
 
         //En archivo de texto la salida debe ser la impresión del recibo de las operaciones que haga.
-        public List<Usuario> ListaUsuarios;
+        public string user { get; set; }
+        public string contrasenia { get; set; }
 
-        public Usuario() {
-            ListaUsuarios = new List<Usuario>();
-        }
+        public static List<Usuario> listaUsuarios = new List<Usuario>();
+
+        public Usuario() { }
 
         public Usuario(string cedula, string nombre, string user, string contrasenia)
         {
@@ -24,33 +25,44 @@ namespace CajeroAutomatico
             this.nombre = nombre;
             this.user = user;
             this.contrasenia = contrasenia;
-            ListaUsuarios = new List<Usuario>();
         }
         
 
         public override void RegistrarUsuario(Usuario usuario)
         {
-            
-            if(ListaUsuarios.Count == 0)
+            try
             {
-                ListaUsuarios.Add(usuario);
-                MessageBox.Show("Usuario creado correctamente");
-            }
-            else
-            {
-                foreach(var item in ListaUsuarios)
+                int contador = 0;
+
+                if (listaUsuarios.Count == 0)
                 {
-                    if (item.cedula.Equals(usuario.cedula))
+                    listaUsuarios.Add(usuario);
+                    MessageBox.Show("Usuario creado correctamente");
+                }
+                else
+                {
+                    foreach (var usuario1 in listaUsuarios)
                     {
-                        MessageBox.Show("El usuario ya se encuentra registrado");
-                        break;
+                        if (usuario1.cedula.Equals(usuario.cedula))
+                        {
+                            contador += 1;
+                        }
+                    }
+
+                    if (contador == 0)
+                    {
+                        listaUsuarios.Add(usuario);
+                        MessageBox.Show("Usuario creado correctamente");
                     }
                     else
                     {
-                        this.ListaUsuarios.Add(usuario);
-                        MessageBox.Show("Usuario creado correctamente");
+                        MessageBox.Show("El usuario ya se encuentra registrado");
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de aplicación - " + ex.Message);
             }
         }
 
@@ -59,16 +71,11 @@ namespace CajeroAutomatico
 
             Usuario uNuevo = new Usuario();
 
-            foreach(Usuario u in ListaUsuarios)
+            foreach(Usuario u in listaUsuarios)
             {
                 if (u.cedula.Equals(id))
                 {
                     uNuevo = u;
-                }
-                else
-                {
-                    MessageBox.Show("Usuario no se encuentra registrado");
-                    break;
                 }
             }
             return uNuevo;
@@ -76,19 +83,20 @@ namespace CajeroAutomatico
 
         public List<Usuario> ConsultarTodos()
         {
-            List<Usuario> ul = new List<Usuario>();
-            Usuario u = new Usuario();
-
-            foreach(var item in ListaUsuarios)
+            List<Usuario> list = new List<Usuario>();
+            
+            foreach(Usuario item in listaUsuarios)
             {
-                u.cedula = item.cedula;
-                u.nombre = item.nombre;
-                u.user = item.user;
-                u.contrasenia = item.contrasenia;
-                ul.Add(u);
+                Usuario us = new Usuario();
+                us.cedula = item.cedula;
+                us.nombre = item.nombre;
+                us.user = item.user;   
+                us.contrasenia = item.contrasenia;
+                list.Add(us);
             }
 
-            return ul;
+            return list;
+
         }
     }
 }

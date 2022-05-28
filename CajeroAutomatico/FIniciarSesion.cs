@@ -12,8 +12,7 @@ namespace CajeroAutomatico
 {
     public partial class FIniciarSesion : Form
     {
-        
-        Sesion sesion = new Sesion();
+        Sesion sesion = new Sesion();        
 
         public FIniciarSesion()
         {
@@ -22,33 +21,29 @@ namespace CajeroAutomatico
 
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
-            
-            try
+
+            if(txtContrasenia.Text == "" || txtUsuario.Text == "")
             {
-                if (txtContrasenia.Text == "" || txtUsuario.Text == "") 
+                MessageBox.Show("Debe llenar todos los campos");
+            }
+            else
+            {
+                string user = txtUsuario.Text;
+                string contrasenia = txtContrasenia.Text;
+
+                bool val = sesion.ValidarUsuario(user, contrasenia);
+
+                if (val)
                 {
-                    MessageBox.Show("Debe llenar todos los campos");
+                    this.Hide();
+                    FOperacionesCuenta foc = new FOperacionesCuenta();
+                    foc.Show();
                 }
                 else
                 {
-                    string user = txtUsuario.Text;
-                    string pass = txtContrasenia.Text;
-
-                    bool se = sesion.IniciarSesion(user, pass);
-
-                    if (se == true)
-                    {
-                        MessageBox.Show("Entramos");
-                    }
-                    else
-                    {
-                        MessageBox.Show("No entramos");
-                    }
+                    MessageBox.Show("El usuario no existe, ingrese uno valido o registrese");
+                    LimpiarCampos();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "Error de aplicación");
             }
         }
 

@@ -10,8 +10,6 @@ namespace CajeroAutomatico
     {
         public string cedula { get; set; }
         public string nombre { get; set; }
-        public string user { get; set; }
-        public string contrasenia { get; set; }
 
         public abstract void RegistrarUsuario(Usuario usuario);
     }

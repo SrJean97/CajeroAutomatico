@@ -7,23 +7,35 @@ using System.Windows.Forms;
 
 namespace CajeroAutomatico
 {
-    internal class Sesion
+    public class Sesion
     {
-        
 
-        public bool IniciarSesion(string user, string pass)
+        Usuario usuario = new Usuario();
+        List<Usuario> listaUsuarios = new List<Usuario>();  
+
+        public bool ValidarUsuario(string user, string pass)
         {
-            Usuario usuario = new Usuario();
-
-            foreach (Usuario u in usuario.ListaUsuarios) 
+            try
             {
-                if(u.user == user && u.contrasenia == pass)
+                listaUsuarios = usuario.ConsultarTodos();
+
+                foreach (var u in listaUsuarios)
                 {
-                    return true;
-                    break;
+                    if(u.user == user && u.contrasenia == pass)
+                    {
+                        return true;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de aplicación " + ex);
+            }
+
             return false;
         }
+
+
+
     }
 }

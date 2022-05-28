@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRegistrarCuenta = new System.Windows.Forms.Button();
             this.btnCancelarRegistro = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnRegistrar = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnRegistrarCuenta);
             this.groupBox1.Controls.Add(this.btnCancelarRegistro);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.btnRegistrar);
@@ -60,20 +62,33 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(58, 44);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(664, 353);
+            this.groupBox1.Size = new System.Drawing.Size(605, 388);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // btnRegistrarCuenta
+            // 
+            this.btnRegistrarCuenta.BackColor = System.Drawing.Color.MediumSpringGreen;
+            this.btnRegistrarCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnRegistrarCuenta.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnRegistrarCuenta.Location = new System.Drawing.Point(346, 290);
+            this.btnRegistrarCuenta.Name = "btnRegistrarCuenta";
+            this.btnRegistrarCuenta.Size = new System.Drawing.Size(177, 32);
+            this.btnRegistrarCuenta.TabIndex = 11;
+            this.btnRegistrarCuenta.Text = "Registrar Cuenta";
+            this.btnRegistrarCuenta.UseVisualStyleBackColor = false;
+            this.btnRegistrarCuenta.Click += new System.EventHandler(this.btnRegistrarCuenta_Click);
             // 
             // btnCancelarRegistro
             // 
             this.btnCancelarRegistro.BackColor = System.Drawing.Color.IndianRed;
             this.btnCancelarRegistro.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnCancelarRegistro.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCancelarRegistro.Location = new System.Drawing.Point(387, 283);
+            this.btnCancelarRegistro.Location = new System.Drawing.Point(568, 11);
             this.btnCancelarRegistro.Name = "btnCancelarRegistro";
-            this.btnCancelarRegistro.Size = new System.Drawing.Size(82, 27);
+            this.btnCancelarRegistro.Size = new System.Drawing.Size(31, 28);
             this.btnCancelarRegistro.TabIndex = 10;
-            this.btnCancelarRegistro.Text = "Cancelar";
+            this.btnCancelarRegistro.Text = "X";
             this.btnCancelarRegistro.UseVisualStyleBackColor = false;
             this.btnCancelarRegistro.Click += new System.EventHandler(this.btnCancelarRegistro_Click);
             // 
@@ -84,49 +99,49 @@
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.Color.Crimson;
-            this.label1.Location = new System.Drawing.Point(180, 0);
+            this.label1.Location = new System.Drawing.Point(184, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(289, 39);
+            this.label1.Size = new System.Drawing.Size(139, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "REGISTRAR USUARIO";
+            this.label1.Text = "USUARIO";
             // 
             // btnRegistrar
             // 
             this.btnRegistrar.BackColor = System.Drawing.Color.MediumSpringGreen;
             this.btnRegistrar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnRegistrar.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnRegistrar.Location = new System.Drawing.Point(236, 283);
+            this.btnRegistrar.Location = new System.Drawing.Point(98, 290);
             this.btnRegistrar.Name = "btnRegistrar";
-            this.btnRegistrar.Size = new System.Drawing.Size(82, 27);
+            this.btnRegistrar.Size = new System.Drawing.Size(177, 27);
             this.btnRegistrar.TabIndex = 9;
-            this.btnRegistrar.Text = "Registrar";
+            this.btnRegistrar.Text = "Registrar Usuario";
             this.btnRegistrar.UseVisualStyleBackColor = false;
             this.btnRegistrar.Click += new System.EventHandler(this.btnRegistrar_Click);
             // 
             // txtContrasenia
             // 
-            this.txtContrasenia.Location = new System.Drawing.Point(219, 221);
+            this.txtContrasenia.Location = new System.Drawing.Point(202, 222);
             this.txtContrasenia.Name = "txtContrasenia";
             this.txtContrasenia.Size = new System.Drawing.Size(335, 23);
             this.txtContrasenia.TabIndex = 8;
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(219, 182);
+            this.txtUsuario.Location = new System.Drawing.Point(202, 183);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(335, 23);
             this.txtUsuario.TabIndex = 7;
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(219, 141);
+            this.txtNombre.Location = new System.Drawing.Point(202, 142);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(335, 23);
             this.txtNombre.TabIndex = 6;
             // 
             // txtCedula
             // 
-            this.txtCedula.Location = new System.Drawing.Point(219, 97);
+            this.txtCedula.Location = new System.Drawing.Point(202, 98);
             this.txtCedula.Name = "txtCedula";
             this.txtCedula.Size = new System.Drawing.Size(335, 23);
             this.txtCedula.TabIndex = 5;
@@ -138,7 +153,7 @@
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label5.Location = new System.Drawing.Point(95, 221);
+            this.label5.Location = new System.Drawing.Point(78, 222);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 21);
             this.label5.TabIndex = 4;
@@ -151,7 +166,7 @@
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label4.Location = new System.Drawing.Point(95, 182);
+            this.label4.Location = new System.Drawing.Point(78, 183);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(62, 21);
             this.label4.TabIndex = 3;
@@ -164,7 +179,7 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label3.Location = new System.Drawing.Point(95, 141);
+            this.label3.Location = new System.Drawing.Point(78, 142);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 21);
             this.label3.TabIndex = 2;
@@ -177,7 +192,7 @@
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.label2.Location = new System.Drawing.Point(95, 97);
+            this.label2.Location = new System.Drawing.Point(78, 98);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 21);
             this.label2.TabIndex = 1;
@@ -188,7 +203,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(685, 476);
             this.Controls.Add(this.groupBox1);
             this.Name = "FRegistrarUsuario";
             this.Text = "Registrar Usuario";
@@ -212,5 +227,6 @@
         private System.Windows.Forms.TextBox txtUsuario;
         private System.Windows.Forms.TextBox txtNombre;
         private System.Windows.Forms.TextBox txtCedula;
+        private System.Windows.Forms.Button btnRegistrarCuenta;
     }
 }

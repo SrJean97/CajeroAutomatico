@@ -3,98 +3,115 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
 
 namespace CajeroAutomatico
 {
     internal class Cuenta
     {
-        public string NumeroCuenta { get; set; }
-        public double Saldo { get; set; }
+        public string numeroCuenta { get; set; }
+        public double saldo { get; set; }
+        public int puntos { get; set; }
+        public string idUsuario { get; set; }
+        public DateTime fecha { get; set; }
 
-        public int Puntos = 3000;
-        public DateTime Fecha { get; set; }
+        public static List<Cuenta> listaCuentas = new List<Cuenta>();
 
-        public int ValorPuntos = 7;
+        //public static List<string> lista
 
-        public double ValidarSaldo = 0;
+        Usuario usuario = new Usuario();
 
-        public Usuario usuario;
+        public Cuenta() { }
 
-        List<Cuenta> ListaCuentas;
-
-        public Cuenta() {
-            this.Fecha = DateTime.Now;
-            ListaCuentas = new List<Cuenta>();
-        }
-
-        public Cuenta(string NumeroCuenta, double Saldo, Usuario usuario)
+        public Cuenta(string numeroCuenta, double saldo, int puntos, string idUsuario)
         {
-            this.NumeroCuenta = NumeroCuenta;
-            this.Saldo = Saldo;
-            this.usuario = usuario;
-            this.Fecha = DateTime.Now;
-            ListaCuentas = new List<Cuenta>();
-        }
-
-
-        public void CanjearPuntos(int puntosCanje)
-        {
-
-            int vp = 0;
-
-            if(Puntos == 0)
-            {
-                Console.WriteLine("No tiene puntos para canjear");
-            }
-            else if(puntosCanje > Puntos)
-            {
-                Console.WriteLine("El limete de puntos que intenta canjear es mayor a los que tiene actualmente");
-            }
-            else
-            {
-                vp = (puntosCanje * ValorPuntos);
-                Puntos -= puntosCanje;
-                Saldo = (Saldo + vp);
-            }
-            
+            this.numeroCuenta = numeroCuenta;
+            this.saldo = saldo;
+            this.puntos = puntos;
+            this.idUsuario = idUsuario;
         }
 
         public void RegistrarCuenta(Cuenta cuenta)
         {
-            if(ListaCuentas.Count == 0)
+            try
             {
-                ListaCuentas.Add(cuenta);
-                Console.WriteLine("Cuenta creada correctamente");
-            }
-            else
-            {
-                foreach(var item in ListaCuentas)
+                int contadorLista = 0;
+                int contadorUsuarios = 0;
+
+                foreach (var item in usuario.ConsultarTodos())
                 {
-                    if (item.NumeroCuenta.Equals(cuenta.NumeroCuenta))
+                    if (item.cedula.Equals(cuenta.idUsuario))
                     {
-                        Console.WriteLine("El numero de cuenta ya se encuentra registrado");
+                        contadorUsuarios += 1;
                     }
-                    else if (cuenta.usuario.cedula == null)
+                }
+
+                if(contadorUsuarios == 0)
+                {
+                    MessageBox.Show("El usuario al que intenta crearle la cuenta no existe");
+                }
+                else
+                {
+                    foreach (var item in listaCuentas)
                     {
-                        Console.WriteLine("No existe un usuario asociado a la cuenta");
+                        if (item.numeroCuenta.Equals(cuenta.numeroCuenta))
+                        {
+                            contadorLista += 1;
+                        }
+                    }
+
+                    if (contadorLista > 0)
+                    {
+                        MessageBox.Show("El numero de cuenta ya existe");
                     }
                     else
                     {
-                        ListaCuentas.Add(cuenta);
-                        Console.WriteLine("Cuenta creada correctamente");
+                        listaCuentas.Add(cuenta);
+                        MessageBox.Show("Cuenta creada correctamente");
                     }
                 }
             }
+            catch (Exception e)
+            {
+
+                MessageBox.Show("Error de aplicación: " + e);
+            }
+            
         }
 
-        public Cuenta ConsultarCuenta(string idCuenta)
+        public Cuenta ConsultarCuentaNCuenta(string idCuenta)
+        {
+            Cuenta c = new Cuenta();
+
+            if(listaCuentas.Count == 0)
+            {
+                MessageBox.Show("No hay cuentas registradas para mostrar");
+            }
+            else
+            {
+                foreach (var item in listaCuentas)
+                {
+
+                    if (item.numeroCuenta == idCuenta)
+                    {
+                        c = item;
+                    }
+                }
+            }
+
+            
+            return c;
+        }
+
+        public Cuenta ConsultarCuentaCedula(string idUsuario)
         {
             Cuenta c = new Cuenta();
 
 
-            foreach(var item in ListaCuentas)
+            foreach (var item in listaCuentas)
             {
-                if(item.NumeroCuenta == idCuenta)
+                if (item.idUsuario == idUsuario)
                 {
                     c = item;
                 }
@@ -102,40 +119,136 @@ namespace CajeroAutomatico
             return c;
         }
 
-       
-        public void RetirarSaldo(double SaldoRetirar, string numeroCuenta)
+        public void EnviarDinero(double nuevoSaldo, string numeroCuentaEnviar, string numeroCuentaOrigen)
         {
-            
-            if(SaldoRetirar > 2000000)
+            try
             {
-                Console.WriteLine("No puede retirar más de 2 millones por día");
-            }
-            else if (Fecha == DateTime.Now) 
-            {
-                ValidarSaldo = (ValidarSaldo + SaldoRetirar);
-                if(ValidarSaldo > 2000000)
-                {
-                    Console.WriteLine("No puede retirar más de 2 millones por día");
-                }
-                else if(ValidarSaldo > Saldo)
-                {
-                    Console.WriteLine("Saldo insuficiente en su cuenta para retirar");
+                
+                int contador = 0;
+                string numeroCuenta = "";
+
+                Cuenta cuenta = new Cuenta();
+
+
+                if (numeroCuentaOrigen.Equals(numeroCuentaEnviar)){
+                    MessageBox.Show("El numero de cuenta a enviar no debe ser su misma cuenta");
                 }
                 else
                 {
-                    Saldo -= ValidarSaldo;
-                    Console.WriteLine("Su saldo retirado fue de: " + ValidarSaldo);
-                    Console.WriteLine("Saldo actual: " + Saldo);
+                    foreach (var item in listaCuentas)
+                    {
+                        if (item.numeroCuenta.Equals(numeroCuentaEnviar))
+                        {
+                            contador += 1;
+                        }
+                    }
+
+                    if(contador > 0)
+                    {
+                        cuenta = ConsultarCuentaNCuenta(numeroCuentaOrigen);
+                        if(cuenta.saldo < nuevoSaldo)
+                        {
+                            MessageBox.Show("Fondos insuficientes");
+                        }
+                        else
+                        {
+                            cuenta.saldo -= nuevoSaldo;
+                            Cuenta c = new Cuenta();
+                            c = ConsultarCuentaNCuenta(numeroCuentaEnviar);
+                            c.saldo += nuevoSaldo;
+                            MessageBox.Show("Envio realizado con éxito");
+                            using (StreamWriter escribirArchivo = new StreamWriter("F:/envios.txt", false)
+                            {
+                                
+                            }
+
+                        }                        
+                    }
+                    else
+                    {
+                        MessageBox.Show("El numero de cuenta a enviar no existe");
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error de aplicación " + ex);    
+            }
+        }
+
+        public void RetirarDinero(double saldoRetirar, string numeroCuenta)
+        {
+            try
+            {
+                Cuenta cuenta = new Cuenta();
+                cuenta = ConsultarCuentaNCuenta(numeroCuenta);
+
+                if(cuenta != null)
+                {
+                    if(cuenta.saldo == 0)
+                    {
+                        MessageBox.Show("La cuenta no tiene dinero para retirar");
+                    }
+                    else
+                    {
+                        if(cuenta.saldo < saldoRetirar)
+                        {
+                            MessageBox.Show("Fondos insuficientes");
+                        }
+                        else
+                        {
+                            cuenta.saldo -= saldoRetirar;
+                            MessageBox.Show("Retiro exitoso");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La cuenta no existe");
                 }
             }
-            else
+            catch (Exception)
             {
-                ValidarSaldo = 0;
-                ValidarSaldo += SaldoRetirar;
-                Saldo -= ValidarSaldo;
-                Console.WriteLine("Su saldo retirado fue de: " + ValidarSaldo);
-                Console.WriteLine("Saldo actual: " + Saldo);
+
+                throw;
             }
+        }        
+
+        public void CanjearPuntos(int puntosCanje, string numeroCuenta)
+        {
+
+            double vp = 0;
+            double valorPuntos = 0.7;
+
+            foreach (var item in listaCuentas)
+            {
+                if (item.numeroCuenta.Equals(numeroCuenta))
+                {
+                    if (item.puntos == 0)
+                    {
+                        MessageBox.Show("No tiene puntos para canjear");
+                    }
+                    else if (puntosCanje > item.puntos)
+                    {
+                        MessageBox.Show("El limete de puntos que intenta canjear es mayor a los que tiene actualmente");
+                    }
+                    else
+                    {
+
+                        vp = (puntosCanje * valorPuntos);
+                        item.puntos -= puntosCanje;
+                        item.saldo = (item.saldo + vp);
+                        MessageBox.Show("Puntos canjeados con éxito");
+                        break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La cuenta no existe");
+                }
+            }
+
         }
     }
 }
