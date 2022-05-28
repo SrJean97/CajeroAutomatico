@@ -14,11 +14,12 @@ namespace CajeroAutomatico
         public double saldo { get; set; }
         public int puntos { get; set; }
         public string idUsuario { get; set; }
+        public double topeDiario { get; set; }  
         public DateTime fecha { get; set; }
 
         public static List<Cuenta> listaCuentas = new List<Cuenta>();
 
-        //public static List<string> lista
+        //public static List<DateTime> fechalista = new List<DateTime>();
 
         Usuario usuario = new Usuario();
 
@@ -30,6 +31,7 @@ namespace CajeroAutomatico
             this.saldo = saldo;
             this.puntos = puntos;
             this.idUsuario = idUsuario;
+            this.fecha = DateTime.Now; 
         }
 
         public void RegistrarCuenta(Cuenta cuenta)
@@ -38,6 +40,7 @@ namespace CajeroAutomatico
             {
                 int contadorLista = 0;
                 int contadorUsuarios = 0;
+                cuenta.fecha = DateTime.Now;
 
                 foreach (var item in usuario.ConsultarTodos())
                 {
@@ -123,12 +126,10 @@ namespace CajeroAutomatico
         {
             try
             {
-                
                 int contador = 0;
                 string numeroCuenta = "";
 
                 Cuenta cuenta = new Cuenta();
-
 
                 if (numeroCuentaOrigen.Equals(numeroCuentaEnviar)){
                     MessageBox.Show("El numero de cuenta a enviar no debe ser su misma cuenta");
@@ -157,8 +158,14 @@ namespace CajeroAutomatico
                             c = ConsultarCuentaNCuenta(numeroCuentaEnviar);
                             c.saldo += nuevoSaldo;
                             MessageBox.Show("Envio realizado con éxito");
-                            using (StreamWriter escribirArchivo = new StreamWriter("F:/envios.txt", false)
+                            using (StreamWriter escribirArchivo = new StreamWriter("D:/envios.txt", true))
                             {
+                                escribirArchivo.WriteLine("Datos del envío");
+                                escribirArchivo.WriteLine("Cuenta origen:  " + numeroCuentaOrigen + "         Cuenta destino:   " + numeroCuentaEnviar);
+                                escribirArchivo.WriteLine("Usuario: " + cuenta.idUsuario + "             usuario destino:  " + c.idUsuario);
+                                escribirArchivo.WriteLine("Total envío: " + nuevoSaldo);
+
+                                escribirArchivo.WriteLine("---------------------------------------------------------------------------------------------");
                                 
                             }
 
@@ -180,6 +187,88 @@ namespace CajeroAutomatico
         public void RetirarDinero(double saldoRetirar, string numeroCuenta)
         {
             try
+            {
+                Cuenta cuenta = new Cuenta();
+                cuenta = ConsultarCuentaNCuenta(numeroCuenta);
+                double tope = 0;
+
+                if (cuenta != null)
+                {
+                    if (cuenta.saldo == 0)
+                    {
+                        MessageBox.Show("La cuenta no tiene dinero para retirar");
+                    }
+                    else
+                    {
+                        if (cuenta.saldo < saldoRetirar)
+                        {
+                            MessageBox.Show("Fondos insuficientes");
+                        }
+                        else
+                        {
+                            
+                            DateTime fechaNueva = DateTime.Now;
+                            string fechaNuevaFormato = fechaNueva.ToString("dd") + "/" + fechaNueva.ToString("MM") + "/" + fechaNueva.ToString("yyyy");
+
+                            foreach (var item in listaCuentas)
+                            {
+                                string fechaVieja = item.fecha.ToString("dd") + "/" + item.fecha.ToString("MM") + "/" + item.fecha.ToString("yyyy");
+
+                                if (fechaVieja.Equals(fechaNuevaFormato))
+                                {
+                                    tope = topeDiario + saldoRetirar;
+                                    if (tope > 2000000)
+                                    {
+                                        MessageBox.Show("No se puede retirar más de dos millones de pesos diarios");
+                                    }
+                                    else
+                                    {
+                                        cuenta.saldo -= saldoRetirar;
+                                        MessageBox.Show("Retiro exitoso validadno");
+                                        topeDiario += saldoRetirar;
+                                        using (StreamWriter escribirArchivo = new StreamWriter("D:/retiros.txt", true))
+                                        {
+                                            escribirArchivo.WriteLine("Datos del retiro\n");
+                                            escribirArchivo.WriteLine("Cuenta: " + cuenta.numeroCuenta);
+                                            escribirArchivo.WriteLine("usuario: " + cuenta.idUsuario);
+                                            escribirArchivo.WriteLine("Valor retiro: " + saldoRetirar);
+                                            escribirArchivo.WriteLine("Saldo disponible: " + cuenta.saldo);
+                                            escribirArchivo.WriteLine("--------------------------------------------");
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    topeDiario = 0;
+                                    cuenta.fecha = fechaNueva;
+                                    cuenta.saldo -= saldoRetirar;
+                                    MessageBox.Show("Retiro exitoso sin validar");
+
+                                    using (StreamWriter escribirArchivo = new StreamWriter("D:/retiros.txt", true))
+                                    {
+                                        escribirArchivo.WriteLine("Datos del retiro\n");
+                                        escribirArchivo.WriteLine("Cuenta: " + cuenta.numeroCuenta);
+                                        escribirArchivo.WriteLine("usuario: " + cuenta.idUsuario);
+                                        escribirArchivo.WriteLine("Valor retiro: " + saldoRetirar);
+                                        escribirArchivo.WriteLine("Saldo disponible: " + cuenta.saldo);
+                                        escribirArchivo.WriteLine("--------------------------------------------");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La cuenta no existe");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            /*try
             {
                 Cuenta cuenta = new Cuenta();
                 cuenta = ConsultarCuentaNCuenta(numeroCuenta);
@@ -212,14 +301,14 @@ namespace CajeroAutomatico
             {
 
                 throw;
-            }
+            }*/
         }        
 
         public void CanjearPuntos(int puntosCanje, string numeroCuenta)
         {
 
             double vp = 0;
-            double valorPuntos = 0.7;
+            double valorPuntos = 7;
 
             foreach (var item in listaCuentas)
             {
